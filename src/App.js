@@ -1,8 +1,8 @@
-import './App.css';
+import styles from './App.module.css';
 import { useEffect, useState } from 'react';
 import { getWeatherData } from './utils/getWeatherData';
 import WeatherPanel from './components/WeatherPanel';
-import { sampleData } from './utils/dummy';
+import { sampleData } from './utils/sampleData';
 
 function App() {
   const filterData = (data) => {
@@ -17,21 +17,20 @@ function App() {
   const [isError, setIsError] = useState(false);
 
 
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   getWeatherData('san francisco')
-  //     .then((data) => setWeatherData(filterData(data.list)))
-  //     .catch((err) => setIsError(true))
-  //     .then(() => setIsLoading(false));
-  // }, []);
+  useEffect(() => {
+    setIsLoading(true);
+    getWeatherData('san francisco')
+      .then((data) => setWeatherData(filterData(data.list)))
+      .catch((err) => setIsError(true))
+      .then(() => setIsLoading(false));
+  }, []);
 
   return (
-    <div>
+    <div className={styles.container}>
       {!isError && !isLoading
         ? (
           <WeatherPanel
             weatherData={weatherData}
-            className="weather-panel"
           />
         )
         : null
