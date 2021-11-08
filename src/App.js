@@ -1,23 +1,41 @@
-import logo from './logo.svg';
 import './App.css';
+import { useEffect, useState } from 'react';
+import { getWeatherData } from './utils/getWeatherData';
+import WeatherPanel from './components/WeatherPanel';
+import { sampleData } from './utils/dummy';
 
 function App() {
+  const filterData = (data) => {
+    return data.filter((item, index) => {
+      return index % 8 === 0;
+    });
+  }
+
+  const intialData = filterData(sampleData.list);
+  const [weatherData, setWeatherData] = useState(intialData);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+
+
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   getWeatherData('san francisco')
+  //     .then((data) => setWeatherData(filterData(data.list)))
+  //     .catch((err) => setIsError(true))
+  //     .then(() => setIsLoading(false));
+  // }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {!isError && !isLoading
+        ? (
+          <WeatherPanel
+            weatherData={weatherData}
+            className="weather-panel"
+          />
+        )
+        : null
+      }
     </div>
   );
 }
