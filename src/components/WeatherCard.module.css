@@ -1,0 +1,19 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 10px;
+}
+
+.day {
+  font-size: .9em;
+}
+
+.current {
+  background-color: #dddddd;
+}
+
+.temperature {
+  display: flex;
+  justify-content: space-around;
+}
