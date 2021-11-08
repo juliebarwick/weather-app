@@ -1,15 +1,22 @@
-import { convertKelvinToFahrenheit, getDay } from '../utils/convert';
-import './WeatherCard.css';
+import { getDay } from '../utils/convert';
+import styles from './WeatherCard.module.css';
+import Temperature from './Temperature';
 
-function WeatherCard({ weather }) {
+function WeatherCard({ weather, current }) {
 
   return (
-    <div className="weather-card">
-      {getDay(weather.dt_txt)}
-      {convertKelvinToFahrenheit(weather.main.temp_min)}&deg;
-      <img src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} alt={`${weather.weather[0].description} icon`}/>
-      {convertKelvinToFahrenheit(weather.main.temp_max)}&deg;
-      {/* {weather.weather[0].description} */}
+    <div className={`${current ? styles.current : ''} ${styles.card}`}>
+      <div className={`light ${styles.day}`}>{getDay(weather.dt_txt)}</div>
+      <div>
+        <img
+          src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+          alt={`${weather.weather[0].description} icon`}
+        />
+      </div>
+      <div className={styles.temperature}>
+        <Temperature temp={weather.main.temp_max} />
+        <Temperature light temp={weather.main.temp_min} />
+      </div>
     </div>
   );
 }
